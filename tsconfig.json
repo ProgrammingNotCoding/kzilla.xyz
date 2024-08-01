@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "baseUrl": "./",
-    "sourceMap": true,
-    "outDir": "./build",
-    "removeComments": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "strict": true,
-    "esModuleInterop": true
-  },
-  "exclude": ["node_modules", "client"]
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+  }
 }
