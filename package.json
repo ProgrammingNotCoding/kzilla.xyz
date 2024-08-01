@@ -2,6 +2,9 @@
   "name": "kzilla.xyz-server",
   "version": "3.0",
   "scripts": {
+    "start": "tsx src/index.ts",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write --unsafe",
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
