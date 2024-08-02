@@ -1,8 +1,12 @@
-import { Hono } from 'hono';
-import linkRouter from './links-router';
+import { Hono } from "hono";
+import linkRouter from "./link-router";
 
 const appRouter = new Hono();
 
-appRouter.route('/links', linkRouter);
+appRouter.get("/", (c) => {
+  return c.text("Hello World!");
+});
+
+appRouter.route("/links", linkRouter);
 
 export default appRouter;
