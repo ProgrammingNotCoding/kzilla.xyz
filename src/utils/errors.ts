@@ -1,4 +1,4 @@
-import type { Context, Next } from 'hono';
+import type { Context } from 'hono';
 import type { StatusCode } from 'hono/utils/http-status';
 import { ZodError } from 'zod';
 

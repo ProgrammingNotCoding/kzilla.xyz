@@ -1,5 +1,4 @@
 import type { LinkSchemaType } from '../models/links';
-import cache from '../utils/cache';
 import db from '../utils/db';
 import { BackendError } from '../utils/errors';
 
