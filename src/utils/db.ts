@@ -1,5 +1,5 @@
-import config from './env';
 import { type Db, MongoClient } from 'mongodb';
+import config from './env';
 
 let db: Db;
 

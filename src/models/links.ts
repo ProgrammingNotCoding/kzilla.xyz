@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const linkSchema = z.object({
   linkId: z.string().min(10),
@@ -6,7 +6,7 @@ export const linkSchema = z.object({
   analyticsCode: z.string().trim().min(5),
   longUrl: z.string().url().trim().min(5),
   customCode: z.string().trim().min(4).max(25).optional(),
-  creatorIpAddress: z.string().ip().optional().default("::1"),
+  creatorIpAddress: z.string().ip().optional().default('::1'),
   logs: z
     .array(
       z.object({

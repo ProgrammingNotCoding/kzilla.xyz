@@ -1,7 +1,7 @@
-import type { LinkSchemaType } from "../models/links";
-import cache from "../utils/cache";
-import db from "../utils/db";
-import { BackendError } from "../utils/errors";
+import type { LinkSchemaType } from '../models/links';
+import cache from '../utils/cache';
+import db from '../utils/db';
+import { BackendError } from '../utils/errors';
 
 export async function fetchLink({
   shortCode,
@@ -13,7 +13,7 @@ export async function fetchLink({
   analyticsCode?: string;
 }) {
   try {
-    const linksCollection = (await db()).collection<LinkSchemaType>("links");
+    const linksCollection = (await db()).collection<LinkSchemaType>('links');
 
     return await linksCollection.findOne(
       {
@@ -32,8 +32,8 @@ export async function fetchLink({
       },
     );
   } catch (err) {
-    throw new BackendError("INTERNAL_ERROR", {
-      message: "Error while fetch a link",
+    throw new BackendError('INTERNAL_ERROR', {
+      message: 'Error while fetch a link',
       details: err,
     });
   }
@@ -47,7 +47,7 @@ export async function createLink(
   ipAddress: string,
 ) {
   try {
-    const linksCollection = (await db()).collection<LinkSchemaType>("links");
+    const linksCollection = (await db()).collection<LinkSchemaType>('links');
 
     return await linksCollection.insertOne({
       linkId,
@@ -61,8 +61,8 @@ export async function createLink(
       logs: [],
     });
   } catch (err) {
-    throw new BackendError("INTERNAL_ERROR", {
-      message: "Error while fetch a link",
+    throw new BackendError('INTERNAL_ERROR', {
+      message: 'Error while fetch a link',
       details: err,
     });
   }
@@ -70,7 +70,7 @@ export async function createLink(
 
 export async function fetchMultipleLinks(linkIds: string[]) {
   try {
-    const linksCollection = (await db()).collection<LinkSchemaType>("links");
+    const linksCollection = (await db()).collection<LinkSchemaType>('links');
 
     return await linksCollection
       .find(
@@ -87,8 +87,8 @@ export async function fetchMultipleLinks(linkIds: string[]) {
       )
       .toArray();
   } catch (err) {
-    throw new BackendError("INTERNAL_ERROR", {
-      message: "Error while fetch a link",
+    throw new BackendError('INTERNAL_ERROR', {
+      message: 'Error while fetch a link',
       details: err,
     });
   }

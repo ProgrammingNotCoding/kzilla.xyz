@@ -1,20 +1,20 @@
-import type { Context } from "hono";
-import { createLinkSchema } from "../models/links";
+import { getConnInfo } from '@hono/node-server/conninfo';
+import type { Context } from 'hono';
+import { getCookie, setCookie } from 'hono/cookie';
+import { createLinkSchema } from '../models/links';
 import {
   createLink,
   fetchLink,
   fetchMultipleLinks,
-} from "../services/link-service";
-import { generateRandomCode } from "../utils/links";
-import { BackendError } from "../utils/errors";
-import { getConnInfo } from "@hono/node-server/conninfo";
-import { getCookie, setCookie } from "hono/cookie";
-import cache from "../utils/cache";
+} from '../services/link-service';
+import cache from '../utils/cache';
+import { BackendError } from '../utils/errors';
+import { generateRandomCode } from '../utils/links';
 
 export async function handleCreateLink(c: Context) {
   const connInfo = getConnInfo(c);
-  const ipAddress = connInfo.remote.address || "::1";
-  const myLinksCookie = getCookie(c, "linkIds") || "[]";
+  const ipAddress = connInfo.remote.address || '::1';
+  const myLinksCookie = getCookie(c, 'linkIds') || '[]';
   const myLinksArray = JSON.parse(myLinksCookie);
   const reqBody = await c.req.json();
   const { longUrl, customCode } = await createLinkSchema.parseAsync(reqBody);
@@ -31,14 +31,14 @@ export async function handleCreateLink(c: Context) {
 
   if (shortCodeConflict) {
     if (customCode && shortCodeConflict.customCode === customCode) {
-      throw new BackendError("CONFLICT", {
-        message: "CUSTOM_CODE_CONFLICT",
-        details: "The custom url you provided already exists",
+      throw new BackendError('CONFLICT', {
+        message: 'CUSTOM_CODE_CONFLICT',
+        details: 'The custom url you provided already exists',
       });
     }
 
     // TODO: possiblity of bad practice here... check later
-    console.log("DEBUG: Conflicts occured, retrying");
+    console.log('DEBUG: Conflicts occured, retrying');
     shortCode = generateRandomCode(6);
     analyticsCode = generateRandomCode(6);
     linkId = generateRandomCode(12);
@@ -49,21 +49,21 @@ export async function handleCreateLink(c: Context) {
   (await cache()).set(shortCode, longUrl, 60 * 2);
 
   // TODO: Add to cookie
-  setCookie(c, "linkIds", JSON.stringify(myLinksArray), {
-    sameSite: "strict",
+  setCookie(c, 'linkIds', JSON.stringify(myLinksArray), {
+    sameSite: 'strict',
     httpOnly: true,
   });
-  return c.json({ success: true, message: "Created Successfully" });
+  return c.json({ success: true, message: 'Created Successfully' });
 }
 
 export async function handleFetchMyLinks(c: Context) {
-  const myLinksCookie = getCookie(c, "linkIds") || "[]";
+  const myLinksCookie = getCookie(c, 'linkIds') || '[]';
   const myLinksArray = JSON.parse(myLinksCookie);
 
   if (myLinksArray.length === 0) {
-    throw new BackendError("NOT_FOUND", {
-      message: "No links found",
-      details: "You have not created any links yet",
+    throw new BackendError('NOT_FOUND', {
+      message: 'No links found',
+      details: 'You have not created any links yet',
     });
   }
 
@@ -76,8 +76,8 @@ export async function handleFetchMyLinks(c: Context) {
 }
 
 export async function handleFetchLink(c: Context) {
-  const shortCode = c.req.param("shortCode");
-  const myLinksCookie = getCookie(c, "linkIds") || "[]";
+  const shortCode = c.req.param('shortCode');
+  const myLinksCookie = getCookie(c, 'linkIds') || '[]';
   const myLinksArray = JSON.parse(myLinksCookie);
   console.log(myLinksArray);
 
@@ -89,9 +89,9 @@ export async function handleFetchLink(c: Context) {
     });
 
     if (!link) {
-      throw new BackendError("NOT_FOUND", {
-        message: "Link not found",
-        details: "The link you are trying to access does not exist",
+      throw new BackendError('NOT_FOUND', {
+        message: 'Link not found',
+        details: 'The link you are trying to access does not exist',
       });
     }
 
