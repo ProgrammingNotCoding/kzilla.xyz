@@ -25,5 +25,8 @@ export const createLinkSchema = linkSchema.pick({
   customCode: true,
 });
 
+export const myLinksSchema = z.array(z.string().min(10));
+
 export type LinkSchemaType = z.infer<typeof linkSchema>;
 export type CreateLinkSchemaType = z.infer<typeof createLinkSchema>;
+export type MyLinkSchemaType = z.infer<typeof myLinksSchema>;

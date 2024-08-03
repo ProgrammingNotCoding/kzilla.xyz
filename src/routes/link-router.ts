@@ -1,10 +1,14 @@
 import { Hono } from "hono";
-import { handleCreateLink } from "../controllers/links-controller";
+import {
+  handleFetchMyLinks,
+  handleCreateLink,
+  handleFetchLink,
+} from "../controllers/links-controller";
 
 const linkRouter = new Hono();
 
-// linkRouter.get("/me", handleFetchMyLinks);
-// linkRouter.get("/:shortCode", handleFetchLink);
+linkRouter.get("/me", handleFetchMyLinks);
+linkRouter.get("/:shortCode", handleFetchLink);
 
 linkRouter.post("/", handleCreateLink);
 
